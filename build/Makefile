@@ -25,7 +25,7 @@ OUTPUT = helloVPI.vsim
 
 all: $(OUTPUT)
 
-$(OUTPUT): $(PLITAB) $(VSRC) $(CSRC)
+%.vsim: $(PLITAB) $(VSRC) $(CSRC)
 	$(VCS) $(VCS_OPTS) $^ -o $@
 
 .PHONY: run
