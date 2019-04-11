@@ -3,16 +3,17 @@
 
 using namespace std;
 
-void printHello();
+extern "C" void printHello();
+
+int *a=new int[1];
 
 extern "C" void helloVPICPP()
 {
-    cout << "Hello world !\n" << endl;
-    //printHello();
+    cout << "Hello World! ----cycle_count = " << *a << endl;
     return;
 }
 
-void printHello()
+extern "C" void printHello()
 {
     cout << "hello!\n" << endl;
     return;

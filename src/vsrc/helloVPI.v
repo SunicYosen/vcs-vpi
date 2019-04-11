@@ -1,9 +1,11 @@
 module helloVPI(input wire clk,
 				input wire [15:0] a,
-				input wire [6:0] b);
+				input wire [6:0] b,
+				input wire [31:0] c);
 
 reg [15:0] a_temp;
 reg [6:0] b_temp;
+reg [31:0] count;
 reg [31:0] result;
 
 always @(posedge clk)
@@ -13,11 +15,15 @@ always @(posedge clk)
 	b_temp = b;
 
 always @(posedge clk)
+	count = c; 
+
+always @(posedge clk)
  begin
-	$testParams(a_temp,b_temp);
+	$testParams(a_temp,b_temp, count);
 	//$testPut(result);
 	$display("Result = %.8h",result);
 	$helloVPICPP;
+	$printHello();
  end
 
 endmodule

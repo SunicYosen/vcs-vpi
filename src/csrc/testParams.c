@@ -4,16 +4,20 @@
 #include "vpi_user.h"
 #include "acc_user.h"
 
+extern int *a;
+
 testParams()
 {
-    vpiHandle sysTfH, argI, arg_phase, arg_funct;
-    s_vpi_value argval_phase, argval_funct;
+    vpiHandle sysTfH, argI, arg_phase, arg_funct, arg_count;
+    s_vpi_value argval_phase, argval_funct, argval_count;
 
     PLI_INT32 value_phase;
     PLI_BYTE8 *value_funct;
+    PLI_INT32 value_count;
 
     argval_phase.format = vpiIntVal;
     argval_funct.format = vpiStringVal;
+    argval_count.format = vpiIntVal;
 
     sysTfH = vpi_handle(vpiSysTfCall, NULL);
     argI = vpi_iterate(vpiArgument,sysTfH);
@@ -26,8 +30,15 @@ testParams()
     vpi_get_value(arg_funct, &argval_funct);
     value_funct = argval_funct.value.str;
 
+    arg_count = vpi_scan(argI);
+    vpi_get_value(arg_count, &argval_count);
+    value_count = argval_count.value.integer;
+
+    *a = value_count;
+
     vpi_free_object(argI);
 
+    printf("cycle_count=%d\n",value_count);
     printf("%.8x = %d\n",arg_phase,value_phase);
     printf("%.8x = %.2x\n",arg_funct,value_funct[0]);
 
