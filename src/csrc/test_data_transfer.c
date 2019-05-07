@@ -4,7 +4,7 @@
 #include "vpi_user.h"
 #include "acc_user.h"
 
-extern int *a;
+int *a;
 
 testParams()
 {
@@ -25,6 +25,11 @@ testParams()
     arg_phase = vpi_scan(argI);
     vpi_get_value(arg_phase, &argval_phase);
     value_phase = argval_phase.value.integer;
+    printf("sysTfH = %x\n",*sysTfH);
+    printf("argI = %x\n", *argI);
+    printf("arg_phase = %x\n", *arg_phase);
+    printf("argval_phase = %x\n", *arg_phase);
+    printf("value_phase = %x\n", *arg_phase);
 
     arg_funct = vpi_scan(argI);
     vpi_get_value(arg_funct, &argval_funct);
@@ -59,7 +64,7 @@ testParams()
         return(1);
     }
 
-    handle reg = acc_handle_object("tb.helloVPI1.result");
+    handle reg = acc_handle_object("tb.vpi_test_module.result");
 
     static s_setval_delay delay_s = {{0, 1, 0, 0.0},accNoDelay};
     static s_setval_value value_s = {accIntVal};
@@ -75,10 +80,10 @@ testParams()
 
 testPut()
 {
-    handle reg = acc_handle_object("tb.helloVPI1.result");
-    static s_setval_delay delay_s = {{ 0, 1, 0, 0.0},accForceFlag};
+    handle reg = acc_handle_object("tb.vpi_test_module.result");
+    static s_setval_delay delay_s = {{ 0, 1, 0, 0.0}, accForceFlag};
     static s_setval_value value_s = {accIntVal};
     value_s.value.integer = 3;
-    //value_s.value.integer = (PLI_INT32)Result;
+    //value_s.value.integer = value_s;
     acc_set_value(reg, &value_s,&delay_s);
 }
