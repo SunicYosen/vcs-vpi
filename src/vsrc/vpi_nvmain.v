@@ -17,7 +17,8 @@ module vpi_test_nvmain(input          clk,
                        input [31:0]   arg1,
                        input [31:0]   arg2,
                        input [31:0]   arg3,
-                       input [7:0]    arg4);
+                       input [7:0]    arg4,
+                       output         is_issuable);
   reg command_en;
   reg [7:0]   arg0_reg;
   reg [31:0]  arg1_reg;
@@ -25,11 +26,13 @@ module vpi_test_nvmain(input          clk,
   reg [31:0]  arg3_reg;
   reg [7:0]   arg4_reg;
 
-  reg is_issuable_flag;
+  reg[7:0] is_issuable_flag;
+
+  assign is_issuable = (is_issuable_flag>0) ? 1 : 0;
 
   initial
   begin
-    is_issuable_flag = 1'b0;
+    is_issuable_flag = 8'd0;
     $rvsim_set_config;
     $rvsim_set_parameters;
   end
@@ -53,7 +56,8 @@ module vpi_test_nvmain(input          clk,
   begin
     if(command_en)
     begin
-      $display("[+](Verilog test_nvmain) GET: [ %h, %d, %d, %d, %h ]", arg0_reg, arg1_reg, arg2_reg, arg3_reg, arg4_reg);
+      $display("[+](Verilog test_nvmain) Get Command: [ 0x%.2h, 0x%.8h, 0x%.8h, 0x%.8h, 0x%.2h ]", arg0_reg, arg1_reg, arg2_reg, arg3_reg, arg4_reg);
+      
       if(arg0_reg == 8'h6C)
         $rvsim_is_issuable(arg0_reg, arg1_reg, arg2_reg, arg3_reg, arg4_reg);
 
@@ -92,7 +96,7 @@ module vpi_test_nvmain(input          clk,
       
       else
       begin
-        $display("Error command![ %h, %d, %d, %d, %h ]\n", arg0_reg, arg1_reg, arg2_reg, arg3_reg, arg4_reg);
+        $display("[-] Error command![ %.2h, %.8h, %.8h, %.8h, %.2h ]\n", arg0_reg, arg1_reg, arg2_reg, arg3_reg, arg4_reg);
         $finish();
       end    
     end
