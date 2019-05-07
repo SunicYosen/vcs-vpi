@@ -1,4 +1,8 @@
-$helloVPICPP call=helloVPICPP
 $testParams call=testParams acc+=rw:*
-$printHello call=printHello acc+=rw:*
 $testPut call=testPut acc+=frc:* acc+=rw:*
+
+$rvsim_cycle call=rvsim_cycle
+$rvsim_set_config call=rvsim_set_config
+$rvsim_set_parameters call=rvsim_set_parameters
+$rvsim_issue_command call=rvsim_issue_command acc+=rw:*
+$rvsim_is_issuable call=rvsim_is_issuable acc+=rw:*
