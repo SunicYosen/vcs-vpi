@@ -4,16 +4,17 @@ SRC_DIR = $(BASE_DIR)/src
 CSRC_DIR = $(SRC_DIR)/csrc
 VSRC_DIR = $(SRC_DIR)/vsrc
 
+OUPUTLOGDIR = $(BASE_DIR)/build/output_log
+
 NVMAIN_BASE_DIR = $(abspath /home/sun/File/RISCV/Projects/nvmain)
 NVMAIN_ALLSUBDIR := $(shell find $(NVMAIN_BASE_DIR) -maxdepth 4 -type d)
 NVMAIN_SRCS := $(foreach n,$(NVMAIN_ALLSUBDIR), $(wildcard $(n)/*.cpp))
 NVMAIN_SRCS_RVSIM := $(foreach n,$(NVMAIN_ALLSUBDIR), $(wildcard $(n)/*.cc))
 NVMAIN_HEADERS :=  $(foreach n,$(NVMAIN_ALLSUBDIR) , $(wildcard $(n)/*.h))
 
-CSRC = $(CSRC_DIR)/testParams.c
+CSRC = $(CSRC_DIR)/test_data_transfer.c
 
 VSRC = $(VSRC_DIR)/vpi_nvmain.v \
-			 $(VSRC_DIR)/vpi_data.v \
        $(VSRC_DIR)/tb_nvmain.v 
 
 PLITAB = $(SRC_DIR)/pli.tab
@@ -39,9 +40,11 @@ all: $(OUTPUT)
 	$(VCS) $(VCS_OPTS) $^ -o $@
 
 .PHONY: run
+
 run:
-	$(OUTPUT)
+	mkdir -p $(OUPUTLOGDIR)
+	$(OUTPUT) > $(OUPUTLOGDIR)/run_`date +%y%m%d%02k%M`.log
 
 .PHONY: clean
 clean:
-	rm -rf $(OUTPUT) $(OUTPUT).daidir csrc/ ucli.key
+	rm -rf $(OUTPUT) $(OUTPUT).daidir csrc/ ucli.key $(OUPUTLOGDIR)
