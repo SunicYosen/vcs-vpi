@@ -85,5 +85,5 @@ testPut()
     static s_setval_value value_s = {accIntVal};
     value_s.value.integer = 3;
     //value_s.value.integer = value_s;
-    acc_set_value(reg, &value_s,&delay_s);
+    acc_set_value(reg, &value_s, &delay_s);
 }
