@@ -10,6 +10,7 @@
 `define W 0x57
 `define X 0x58
 `define Y 0x59
+`define i 0x69
 
 module vpi_test_nvmain(input          clk,
                        input          command_enable,
@@ -28,7 +29,7 @@ module vpi_test_nvmain(input          clk,
 
   reg[7:0] is_issuable_flag;
 
-  assign is_issuable = (is_issuable_flag>0) ? 1 : 0;
+  assign is_issuable = (is_issuable_flag > 0) ? 1 : 0;
 
   initial
   begin
@@ -58,17 +59,24 @@ module vpi_test_nvmain(input          clk,
     begin
       $display("[+](Verilog test_nvmain) Get Command: [ 0x%.2h, 0x%.8h, 0x%.8h, 0x%.8h, 0x%.2h ]", arg0_reg, arg1_reg, arg2_reg, arg3_reg, arg4_reg);
       
-      if(arg0_reg == 8'h6C)
-        $rvsim_is_issuable(arg0_reg, arg1_reg, arg2_reg, arg3_reg, arg4_reg);
+      if(arg0_reg == 8'h69)
+        $rvsim_is_issuable();
+      
+      // if(arg0_reg == 8'h6C)
+      //   $rvsim_is_issuable();
+      //   //$rvsim_is_issuable(arg0_reg, arg1_reg, arg2_reg, arg3_reg, arg4_reg);
 
-      else if(arg0_reg == 8'h77)
-        $rvsim_is_issuable(arg0_reg, arg1_reg, arg2_reg, arg3_reg, arg4_reg);
+      // else if(arg0_reg == 8'h77)
+      //   $rvsim_is_issuable();
+      //   //$rvsim_is_issuable(arg0_reg, arg1_reg, arg2_reg, arg3_reg, arg4_reg);
       
-      else if(arg0_reg == 8'h72)
-        $rvsim_is_issuable(arg0_reg, arg1_reg, arg2_reg, arg3_reg, arg4_reg);
+      // else if(arg0_reg == 8'h72)
+      //   $rvsim_is_issuable();
+      //   //$rvsim_is_issuable(arg0_reg, arg1_reg, arg2_reg, arg3_reg, arg4_reg);
       
-      else if(arg0_reg == 8'h63)
-        $rvsim_is_issuable(arg0_reg, arg1_reg, arg2_reg, arg3_reg, arg4_reg);
+      // else if(arg0_reg == 8'h63)
+      //   $rvsim_is_issuable();
+      //   //$rvsim_is_issuable(arg0_reg, arg1_reg, arg2_reg, arg3_reg, arg4_reg);
 
       else if(arg0_reg == 8'h4C)
       begin
@@ -98,7 +106,7 @@ module vpi_test_nvmain(input          clk,
       begin
         $display("[-] Error command![ %.2h, %.8h, %.8h, %.8h, %.2h ]\n", arg0_reg, arg1_reg, arg2_reg, arg3_reg, arg4_reg);
         $finish();
-      end    
+      end
     end
   end
 

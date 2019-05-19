@@ -5,6 +5,7 @@
 `define a 0x61
 `define A 0x41
 `define c 0x63
+`define i 0x69
 `define C 0x43
 `define l 0x6C
 `define L 0x4C
@@ -120,7 +121,7 @@ begin
     command_en = 0;
 */
 
-    #10000
+    #10000000
     $finish;
 end
 
@@ -170,7 +171,7 @@ begin
         begin
             if(is_issuable_fre_count == 3'b000)
               begin
-                arg0_reg <= arg0_mem[count_flag] + 8'h20;
+                arg0_reg <= 8'h69;
                 arg1_reg <= arg1_mem[count_flag];
                 arg2_reg <= arg2_mem[count_flag];
                 arg3_reg <= arg3_mem[count_flag];
